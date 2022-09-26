@@ -17,7 +17,7 @@ func SetupDB() *gorm.DB {
 	USER := os.Getenv("USER")
 	PASS := os.Getenv("PASS")
 	HOST := os.Getenv("HOST")
-	PORT := os.Getenv("PORT")
+	PORT := os.Getenv("PORT_DB")
 	DBNAME := os.Getenv("DBNAME")
 	
 	URL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", USER, PASS, HOST, PORT, DBNAME)

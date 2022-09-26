@@ -1,0 +1,16 @@
+@prod_uri = https://gin-restapi.up.railway.app
+
+
+GET {{prod_uri}}/task
+
+###
+GET {{prod_uri}}/tasks/1
+
+###
+POST {{prod_uri}}/tasks
+Accept: application/json
+
+{
+  "assignedTo": "abdul",
+  "task": "Jangan lupa makan ya" 
+}

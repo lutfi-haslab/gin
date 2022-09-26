@@ -1,30 +1,19 @@
+// controllers/books.go
+
 package controllers
 
 import (
+	"gin/config"
 	"gin/models"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 )
-
-type CreateTaskInput struct {
-	AssingedTo string `json:"assignedTo"`
-	Task       string `json:"task"`
-	Deadline   string `json:"deadline"`
-}
-
-type UpdateTaskInput struct {
-	AssingedTo string `json:"assignedTo"`
-	Task       string `json:"task"`
-	Deadline   string `json:"deadline"`
-}
 
 // GET /tasks
 // Get all tasks
 func FindTasks(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
+	db := config.SetupDB()
 	var tasks []models.Task
 	db.Find(&tasks)
 
@@ -34,82 +23,71 @@ func FindTasks(c *gin.Context) {
 // POST /tasks
 // Create new task
 func CreateTask(c *gin.Context) {
-	// Validate input
-	var input CreateTaskInput
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+	var body struct {
+		AssingedTo string
+		Task       string
+		Deadline   string
+	}
+
+	c.Bind(&body)
+	db := config.SetupDB()
+	task := models.Task{AssingedTo: body.AssingedTo,Task: body.Task, Deadline: body.Deadline }
+	result := db.Create(&task)
+
+	if result.Error != nil {
+		c.Status(400)
 		return
 	}
-	date := "2006-01-02"
-	deadline, _ := time.Parse(date, input.Deadline)
-
-	// Create task
-	task := models.Task{AssingedTo: input.AssingedTo, Task: input.Task, Deadline: deadline}
-
-	db := c.MustGet("db").(*gorm.DB)
-	db.Create(&task)
 
 	c.JSON(http.StatusOK, gin.H{"data": task})
 }
 
 // GET /tasks/:id
 // Find a task
-func FindTask(c *gin.Context) { // Get model if exist
+func FindTask(c *gin.Context) { 
+
+	id := c.Param("id")
+
 	var task models.Task
-
-	db := c.MustGet("db").(*gorm.DB)
-	if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
-
+	db := config.SetupDB()
+	db.First(&task, id)
+	
 	c.JSON(http.StatusOK, gin.H{"data": task})
 }
 
 // PATCH /tasks/:id
 // Update a task
 func UpdateTask(c *gin.Context) {
+	id := c.Param("id")
 
-	db := c.MustGet("db").(*gorm.DB)
-	// Get model if exist
+	var body struct {
+		AssingedTo string
+		Task       string
+		Deadline   string
+	}
+	c.Bind(&body)
 	var task models.Task
-	if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
+	db := config.SetupDB()
+	db.First(&task, id)
 
-	// Validate input
-	var input UpdateTaskInput
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	date := "2006-01-02"
-	deadline, _ := time.Parse(date, input.Deadline)
-
-	var updatedInput models.Task
-	updatedInput.Deadline = deadline
-	updatedInput.AssingedTo = input.AssingedTo
-	updatedInput.Task = input.Task
-
-	db.Model(&task).Updates(updatedInput)
-
+	db.Model(&task).Updates(models.Task{
+		AssingedTo: body.AssingedTo,
+		Task: body.Task, 
+		Deadline: body.Deadline,
+	})
 	c.JSON(http.StatusOK, gin.H{"data": task})
 }
 
 // DELETE /tasks/:id
 // Delete a task
 func DeleteTask(c *gin.Context) {
-	// Get model if exist
-	db := c.MustGet("db").(*gorm.DB)
-	var book models.Task
-	if err := db.Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
+	id := c.Param("id")
 
-	db.Delete(&book)
-
-	c.JSON(http.StatusOK, gin.H{"data": true})
+	db := config.SetupDB()
+	db.Delete(&models.Task{}, id)
+	
+	c.JSON(200, gin.H{
+		"msg": "Data Deleted",
+	})
 }

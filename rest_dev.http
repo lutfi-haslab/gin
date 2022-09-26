@@ -1,0 +1,39 @@
+@dev_uri = http://localhost:8080
+
+###
+GET {{dev_uri}}/task
+
+###
+GET {{dev_uri}}/tasks/1
+
+###
+POST {{dev_uri}}/tasks
+Content-Type: application/json
+
+{ 
+  "AssingedTo": "Lutfi Ikbal Majid",
+  "Task": "Jangan lupa makan nasi yaa",
+  "Deadline": "20 Agustus 2022"
+}
+
+###
+PATCH  {{dev_uri}}/tasks/1
+Content-Type: application/json
+
+{ 
+  "AssingedTo": "Lutfi Ikbal Majid",
+  "Task": "Jangan lupa makan nasi yaa",
+  "Deadline": "20 Agustus 2022"
+}
+
+###
+DELETE  {{dev_uri}}/tasks/2
+
+###
+POST {{dev_uri}}/post
+Content-Type: application/json
+
+{
+  "Title": "Test",
+  "Body": "Ini adalah body test"
+}
