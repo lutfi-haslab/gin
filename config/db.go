@@ -12,12 +12,8 @@ import (
 
 // SetupDB : initializing mysql database
 func SetupDB() *gorm.DB {
-	errEnv := godotenv.Load("./.env")
-	if errEnv != nil {
-		fmt.Printf("Could not load .env file")
-		os.Exit(1)
-	}
 
+	godotenv.Load("./.env")
 	USER := os.Getenv("USER")
 	PASS := os.Getenv("PASS")
 	HOST := os.Getenv("HOST")
