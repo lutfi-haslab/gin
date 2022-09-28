@@ -28,8 +28,6 @@ func SetupRoutes(db *gorm.DB) *gin.Engine {
 		r.POST("/post", controllers.PostCreate)
 		r.PUT("/post/:id", controllers.PostUpdate)
 		r.DELETE("/post/:id", controllers.PostDelete)
-
-
     return r
 }
 
