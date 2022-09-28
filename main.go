@@ -34,7 +34,7 @@ func SetupRoutes(db *gorm.DB) *gin.Engine {
     r.Use(func(c *gin.Context) {
         c.Set("db", db)
     })		
-
+// 
     r.GET("/task", controllers.FindTasks)
     r.POST("/tasks", controllers.CreateTask)
 		r.GET("/tasks/:id", controllers.FindTask)
