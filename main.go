@@ -20,8 +20,8 @@ func SetupRoutes(db *gorm.DB) *gin.Engine {
     })
 
 		r.Use(cors.New(cors.Config{
-			AllowOrigins:     []string{"https://foo.com"},
-			AllowMethods:     []string{"PUT", "PATCH"},
+			AllowOrigins:     []string{"*"},
+			AllowMethods:     []string{"GET", "POST", "DELETE", "PUT", "PATCH"},
 			AllowHeaders:     []string{"Origin"},
 			ExposeHeaders:    []string{"Content-Length"},
 			AllowCredentials: true,
