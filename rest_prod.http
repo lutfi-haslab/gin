@@ -8,9 +8,10 @@ GET {{prod_uri}}/tasks/1
 
 ###
 POST {{prod_uri}}/tasks
-Accept: application/json
+Content-Type: application/json
 
-{
-  "assignedTo": "abdul",
-  "task": "Jangan lupa makan ya" 
+{ 
+  "AssingedTo": "Lutfi Ikbal Majid",
+  "Task": "Jangan lupa makan nasi yaa",
+  "Deadline": "20 Agustus 2022"
 }
