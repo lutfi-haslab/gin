@@ -4,14 +4,14 @@
 GET {{prod_uri}}/task
 
 ###
-GET {{prod_uri}}/tasks/1
+GET {{prod_uri}}/tasks/6
 
 ###
-POST {{prod_uri}}/tasks
+PATCH  {{prod_uri}}/tasks/1
 Content-Type: application/json
 
 { 
   "AssingedTo": "Lutfi Ikbal Majid",
   "Task": "Jangan lupa makan nasi yaa",
-  "Deadline": "20 Agustus 2022"
+  "Deadline": "20 Agustus 20ss22"
 }

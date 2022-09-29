@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 
 	// go-sql-driver/mysql
@@ -14,14 +13,14 @@ import (
 func SetupDB() *gorm.DB {
 
 	godotenv.Load("./.env")
-	USER := os.Getenv("USER")
-	PASS := os.Getenv("PASS")
-	HOST := os.Getenv("HOST")
-	PORT := os.Getenv("PORT_DB")
-	DBNAME := os.Getenv("DBNAME")
+	// USER := os.Getenv("USER")
+	// PASS := os.Getenv("PASS")
+	// HOST := os.Getenv("HOST")
+	// DBNAME := os.Getenv("DBNAME")
 	
-	URL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", USER, PASS, HOST, PORT, DBNAME)
-	db, err := gorm.Open("mysql", URL)
+	// // URL := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", USER, PASS, HOST, DBNAME)
+	// db, err := gorm.Open("mysql", URL) //Local
+	db, err := gorm.Open("mysql", os.Getenv("DSN")) //PlanetScale
 	
 	if err != nil {
 			panic(err.Error())
