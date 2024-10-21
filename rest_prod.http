@@ -1,11 +1,19 @@
-@prod_uri = https://gin-restapi.up.railway.app
+@prod_uri = https://8080-lutfihaslab-ginrestapi-34d4gtjuf7o.ws-us116.gitpod.io
 
 
 GET {{prod_uri}}/task
 
+HTTP/1.1 200  - OK
+access-control-allow-credentials: true
+access-control-allow-headers: Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With
+access-control-allow-methods: POST,HEAD,PATCH, OPTIONS, GET, PUT, DELETE
+access-control-allow-origin: *
+content-length: 11
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:02:25 GMT
+connection: close
 ###
 GET {{prod_uri}}/tasks/6
-
 ###
 PATCH  {{prod_uri}}/tasks/1
 Content-Type: application/json

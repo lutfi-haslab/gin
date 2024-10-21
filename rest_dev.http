@@ -1,13 +1,40 @@
-@dev_uri = http://localhost:8080
-
+@dev_uri = https://8080-lutfihaslab-ginrestapi-34d4gtjuf7o.ws-us116.gitpod.io
 ###
-GET {{dev_uri}}/task
+GET {{dev_uri}}/users
 
-###
-GET {{dev_uri}}/tasks/1
+HTTP/1.1 301  - Moved Permanently
+content-length: 42
+content-type: text/html; charset=utf-8
+date: Mon, 21 Oct 2024 07:43:18 GMT
+location: /users/
+connection: close
 
+HTTP/1.1 200  - OK
+content-length: 2
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:43:18 GMT
+connection: close
 ###
-POST {{dev_uri}}/tasks
+GET {{dev_uri}}/users/1
+###
+POST {{dev_uri}}/users
+Content-Type: application/json
+
+{"name":"John Doe","email":"john@example.com","password":"secret"}
+
+HTTP/1.1 307  - Temporary Redirect
+content-length: 0
+date: Mon, 21 Oct 2024 07:43:26 GMT
+location: /users/
+connection: close
+
+HTTP/1.1 201  - Created
+content-length: 160
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:43:26 GMT
+connection: close
+###
+PUT  {{dev_uri}}/users/1
 Content-Type: application/json
 
 { 
@@ -15,25 +42,119 @@ Content-Type: application/json
   "Task": "Jangan lupa makan nasi yaa",
   "Deadline": "20 Agustus 2022"
 }
-
 ###
-PATCH  {{dev_uri}}/tasks/1
-Content-Type: application/json
-
-{ 
-  "AssingedTo": "Lutfi Ikbal Majid",
-  "Task": "Jangan lupa makan nasi yaa",
-  "Deadline": "20 Agustus 2022"
-}
-
+DELETE  {{dev_uri}}/users/2
 ###
-DELETE  {{dev_uri}}/tasks/2
+GET {{dev_uri}}/products
 
+HTTP/1.1 301  - Moved Permanently
+content-length: 45
+content-type: text/html; charset=utf-8
+date: Mon, 21 Oct 2024 07:44:00 GMT
+location: /products/
+connection: close
+
+HTTP/1.1 200  - OK
+content-length: 207
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:44:00 GMT
+connection: close
 ###
-POST {{dev_uri}}/post
+GET {{dev_uri}}/products/1
+###
+POST {{dev_uri}}/products
 Content-Type: application/json
 
 {
-  "Title": "Test",
-  "Body": "Ini adalah body test"
+    "name": "Example Product",
+    "description": "This is a test product",
+    "price": 29.99,
+    "stock": 100
 }
+
+HTTP/1.1 307  - Temporary Redirect
+content-length: 0
+date: Mon, 21 Oct 2024 07:43:51 GMT
+location: /products/
+connection: close
+
+HTTP/1.1 201  - Created
+content-length: 205
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:43:51 GMT
+connection: close
+###
+PUT  {{dev_uri}}/products/1
+Content-Type: application/json
+
+{
+    "name": "Example Product",
+    "description": "This is a test product",
+    "price": 29.99,
+    "stock": 200
+}
+###
+DELETE  {{dev_uri}}/products/2
+###
+GET {{dev_uri}}/orders
+
+HTTP/1.1 301  - Moved Permanently
+content-length: 43
+content-type: text/html; charset=utf-8
+date: Mon, 21 Oct 2024 07:44:39 GMT
+location: /orders/
+connection: close
+
+HTTP/1.1 200  - OK
+content-length: 360
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:44:39 GMT
+connection: close
+###
+GET {{dev_uri}}/orders/1
+
+HTTP/1.1 200  - OK
+content-length: 358
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:45:08 GMT
+connection: close
+###
+POST {{dev_uri}}/orders
+Content-Type: application/json
+
+{
+    "user_id": 1,
+    "status": "pending",
+    "total_price": 29.99,
+    "order_items": [
+      {
+        "product_id": 1,
+        "quantity": 1,
+        "unit_price": 29.99
+      }
+    ]
+}
+
+HTTP/1.1 307  - Temporary Redirect
+content-length: 0
+date: Mon, 21 Oct 2024 07:44:29 GMT
+location: /orders/
+connection: close
+
+HTTP/1.1 201  - Created
+content-length: 358
+content-type: application/json; charset=utf-8
+date: Mon, 21 Oct 2024 07:44:29 GMT
+connection: close
+###
+PUT  {{dev_uri}}/orders/1
+Content-Type: application/json
+
+{
+    "name": "Example Product",
+    "description": "This is a test product",
+    "price": 29.99,
+    "stock": 200
+}
+###
+DELETE  {{dev_uri}}/orders/2
